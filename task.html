@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+        crossorigin="anonymous"></script>
+    <title>task</title>
+</head>
+
+<body>
+    <div class="container-fluid p-4">
+        <div class="row">
+            <div class="col-3  d-flex justify-content-center align-items-center">
+                <button type="button" id="post" class="btn btn-primary">Post</button>
+            </div>
+            <div class="col-3  d-flex justify-content-center align-items-center">
+                <button type="button" id="get" class="btn btn-secondary">Get</button>
+            </div>
+            <div class="col-3  d-flex justify-content-center align-items-center">
+                <button type="button" id="put" class="btn btn-success">Put</button>
+            </div>
+            <div class="col-3  d-flex justify-content-center align-items-center">
+                <button type="button" id="delete" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        const sendRequest = (method, url, data = '') => {
+            const xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (xhttp.readyState == 4 && xhttp.status == 200) {
+                    console.log(JSON.parse(this.responseText));
+                }
+            };
+            xhttp.open(method, url, true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send(data);
+        }
+        // to retrive user list 
+        document.getElementById('get').addEventListener('click', () => {
+            sendRequest('GET', 'http://localhost:4000/users');
+        })
+        //to create user list
+        document.getElementById('post').addEventListener('click', () => {
+            sendRequest('POST', 'http://localhost:4000/users', "name=Nithya&&gender=F");
+        })
+
+        //to update user list
+        document.getElementById('put').addEventListener('click', () => {
+            sendRequest('PUT', 'http://localhost:4000/users/1259d461-afe6-415b-85f5-1d9165a1f9f1', "name=Sai&&gender=M");
+        })
+        //to remove user list
+        document.getElementById('delete').addEventListener('click', () => {
+            sendRequest('DELETE', 'http://localhost:4000/users/b559bf2e-35bd-4010-ad13-d7854bf6c679');
+        })
+    </script>
+</body>
+
+</html>
